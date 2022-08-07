@@ -133,3 +133,18 @@ const getClassroomRoles = ({ hasTeachingAssistant, classlist }) => {
 };
 
 console.log(getClassroomRoles(classroom));
+
+// Challenge 6
+
+// Get document body background color dynamically and save it to localStorage
+const changeBackgroundColor = e => {
+  document.body.className = e.target.className;
+  localStorage.setItem('backgroundColor', e.target.className);
+};
+
+document
+  .getElementById('buttons')
+  .addEventListener('click', e => changeBackgroundColor(e));
+
+localStorage.backgroundColor &&
+  (document.body.className = localStorage.backgroundColor);
