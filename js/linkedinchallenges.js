@@ -148,3 +148,16 @@ document
 
 localStorage.backgroundColor &&
   (document.body.className = localStorage.backgroundColor);
+
+// Challenge 7
+
+// Make up a food truck
+const getCombinedMenu = menus => [...new Set(menus.flat())];
+
+const combinedMenu = getCombinedMenu([
+  ['pizza', 'cheese', 'pineapple', 'maize'],
+  ['pizza', 'chicken', 'tomatoes', 'onions'],
+  ['pizza', 'tomatoes', 'mushrooms', 'onions', 'pepper'],
+]);
+
+console.log(combinedMenu);
