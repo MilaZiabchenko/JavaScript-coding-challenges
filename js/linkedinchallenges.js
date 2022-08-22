@@ -161,3 +161,47 @@ const combinedMenu = getCombinedMenu([
 ]);
 
 console.log(combinedMenu);
+
+// Challenge 8
+
+// Create train stations generator
+const station = document.querySelector('span');
+const dynamicText = document.getElementById('dynamic-text');
+const btn = document.getElementById('next-stop');
+
+const stops = ['Newburgh', 'Peekskill', 'Yonkers', 'Bronx', 'Grand Central'];
+
+function* generateStops(...stops) {
+  for (let stop of stops) {
+    yield stop;
+  }
+
+  return `We made it to ${stops.at(-1)}!`;
+}
+
+const nycHudsonLine = generateStops(...stops);
+
+const animateButton = () => {
+  btn.style.outlineOffset = '9px';
+
+  setTimeout(() => (btn.style.outlineOffset = '6px'), 125);
+};
+
+const getToTheNextStation = () => {
+  animateButton();
+
+  const currentStation = nycHudsonLine.next();
+
+  station.textContent = currentStation.value;
+
+  if (currentStation.done) {
+    station.parentNode.remove();
+    dynamicText.textContent = currentStation.value;
+    dynamicText.style.fontSize = '2.25rem';
+    btn.setAttribute('disabled', true);
+    btn.style.cursor = 'default';
+    btn.style.opacity = '0.5';
+  }
+};
+
+btn.addEventListener('click', getToTheNextStation);
