@@ -10,14 +10,14 @@ const techObject_2 = { ...techArray };
 console.log(techObject_2);
 
 const techObject_3 = techArray.reduce(
-  (acc, key, index) => ({ ...acc, [index + 1]: key }),
+  (acc, cur, index) => ({ ...acc, [index + 1]: cur }),
   {}
 );
 
 console.log(techObject_3);
 
-const techObject_4 = techArray.reduce((acc, key, index) => {
-  acc[index + 1] = key;
+const techObject_4 = techArray.reduce((acc, cur, index) => {
+  acc[index + 1] = cur;
 
   return acc;
 }, {});

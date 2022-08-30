@@ -64,14 +64,14 @@ const hasSameLetterCount = (word_1, word_2) => {
   );
 };
 
-const findAnagrams = (word, allWords) => {
+const findWordAnagrams = (word, allWords) => {
   return allWords
     .filter(entry => hasSameLetterCount(word, entry))
     .filter(anagram => anagram !== word);
 };
 
 const displayAnagram = (word, allWords) => ({
-  [word + '_anagrams']: findAnagrams(word, allWords),
+  [word + '_anagrams']: findWordAnagrams(word, allWords),
 });
 
 const displayAnagrams = (words, allWords) =>
@@ -167,7 +167,7 @@ console.log(combinedMenu);
 // Create train stations generator
 const station = document.querySelector('span');
 const dynamicText = document.getElementById('dynamic-text');
-const btn = document.getElementById('next-stop');
+const btn = document.getElementById('btn-next-stop');
 
 const stops = ['Newburgh', 'Peekskill', 'Yonkers', 'Bronx', 'Grand Central'];
 
@@ -199,9 +199,21 @@ const getToTheNextStation = () => {
     dynamicText.textContent = currentStation.value;
     dynamicText.style.fontSize = '2.25rem';
     btn.setAttribute('disabled', true);
-    btn.style.cursor = 'default';
-    btn.style.opacity = '0.5';
   }
 };
 
 btn.addEventListener('click', getToTheNextStation);
+
+// Challenge 9
+
+// String permutation
+const getFactorial = num =>
+  num === 0 || num === 1 ? 1 : (num *= getFactorial(num - 1));
+
+const numPermutations = string => getFactorial(string.length);
+
+const scrabblePiano = numPermutations('piano');
+const scrabbleSquirrel = numPermutations('squirrel');
+
+console.log(scrabblePiano);
+console.log(scrabbleSquirrel);
