@@ -126,8 +126,8 @@ const vehicles = [
 ];
 
 // Counting all occurrences of array elements => object
-const tallyUpInstances_1 = array => {
-  const objectOfInstances = array.reduce((acc, item) => {
+const tallyUpInstances_1 = array =>
+  array.reduce((acc, item) => {
     !acc[item] && (acc[item] = 0);
 
     acc[item]++;
@@ -135,20 +135,32 @@ const tallyUpInstances_1 = array => {
     return acc;
   }, {});
 
-  return objectOfInstances;
-};
-
 let objectOfCountedVehicleInstances = tallyUpInstances_1(vehicles);
 
 console.log(objectOfCountedVehicleInstances);
 
 const tallyUpInstances_2 = array =>
+  array.reduce((acc, item) => {
+    if (item in acc) {
+      acc[item] += 1;
+    } else {
+      acc[item] = 1;
+    }
+
+    return acc;
+  }, {});
+
+objectOfCountedVehicleInstances = tallyUpInstances_2(vehicles);
+
+console.log(objectOfCountedVehicleInstances);
+
+const tallyUpInstances_3 = array =>
   array.reduce(
     (acc, item) => ({ ...acc, [item]: acc[item] ? acc[item] + 1 : 1 }),
     {}
   );
 
-objectOfCountedVehicleInstances = tallyUpInstances_2(vehicles);
+objectOfCountedVehicleInstances = tallyUpInstances_3(vehicles);
 
 console.log(objectOfCountedVehicleInstances);
 

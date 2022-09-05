@@ -217,3 +217,32 @@ const scrabbleSquirrel = numPermutations('squirrel');
 
 console.log(scrabblePiano);
 console.log(scrabbleSquirrel);
+
+// Challenge 10
+
+// Password strength
+const validatePasswordStrength = password => {
+  const hasUpperCaseLetters = /(?=.*[A-Z])/;
+  const hasLowerCaseLetters = /(?=.*[a-z])/;
+  const hasDigits = /(?=.*[0-9])/;
+  const hasSpecialChars = /(?=.*[^a-zA-Z0-9])/;
+  const isMinimumEightChars = /(?=.{8,})/;
+
+  const isStrong =
+    password.match(hasUpperCaseLetters) &&
+    password.match(hasLowerCaseLetters) &&
+    password.match(hasDigits) &&
+    password.match(hasSpecialChars) &&
+    password.match(isMinimumEightChars);
+
+  return isStrong
+    ? `Password ${password} is strong enough`
+    : `Password ${password} is not strong enough`;
+};
+
+console.log(validatePasswordStrength('12345678'));
+console.log(validatePasswordStrength('12Mi@78'));
+console.log(validatePasswordStrength('Mi12&?5678'));
+console.log(validatePasswordStrength('12iS*6789'));
+console.log(validatePasswordStrength('theFu#99du'));
+console.log(validatePasswordStrength('Fu^998877duck'));

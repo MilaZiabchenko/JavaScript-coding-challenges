@@ -466,18 +466,21 @@ let word = 'RaceCar';
 console.log(palindrome(word));
 console.log(word.toLowerCase().split('').reverse().join(''));
 
-const capitalize = ([first, ...rest]) => first.toUpperCase() + rest.join('');
+const capitalizeFirstLetter = ([first, ...rest]) => first.toUpperCase() + rest.join('');
 
-console.log(capitalize('oops'));
+console.log(capitalizeFirstLetter('teo'));
 
-const makeAcronym = fullName => {
-  return fullName
+const makeAcronym = fullName =>
+  fullName
     .split(' ')
     .map(name => `${name.charAt(0).toUpperCase()}.`)
     .join('');
-};
 
 console.log(makeAcronym('teo meo'));
+
+const getFullName = (...names) => names.filter(Boolean).join(' ');
+
+console.log(getFullName('Leo', 'Ziablick'));
 
 const swapCase = string => {
   const array = string.split('');
@@ -602,10 +605,10 @@ console.log(validBraces('(}'));
 // Fibonacci numbers or Fibonacci sequence is a sequence of numbers that is calculated by adding values of two preceding numbers. It’s also known as the golden ratio and it’s widely found in nature.
 
 // Getting Fibonacci sequence with iterative algorithm
-const fibonacciSequence_1 = index => {
+const getFibonacciSequenceOfAGivenLength_1 = length => {
   const sequence = [0, 1];
 
-  for (let i = 2; i <= index; i++) {
+  for (let i = 2; i < length; i++) {
     sequence.push(sequence[i - 2] + sequence[i - 1]);
   }
 
@@ -613,12 +616,12 @@ const fibonacciSequence_1 = index => {
 };
 
 // Getting Fibonacci sequence, using iterative algorithm and destructuring
-const fibonacciSequence_2 = index => {
+const getFibonacciSequenceOfAGivenLength_2 = length => {
   let current = 0;
   let next = 1;
   const sequence = [];
 
-  for (let i = 0; i <= index; i++) {
+  for (let i = 0; i < length; i++) {
     sequence.push(current);
     [current, next] = [next, current + next];
   }
@@ -626,8 +629,28 @@ const fibonacciSequence_2 = index => {
   return sequence;
 };
 
-console.log(fibonacciSequence_1(10));
-console.log(fibonacciSequence_2(10));
+console.log(getFibonacciSequenceOfAGivenLength_1(8));
+console.log(getFibonacciSequenceOfAGivenLength_1(10));
+console.log(getFibonacciSequenceOfAGivenLength_2(8));
+console.log(getFibonacciSequenceOfAGivenLength_2(10));
+
+const getFibSequenceUpToNum = num => {
+  let current = 0;
+  let next = 1;
+  let i = current;
+  const sequence = [];
+
+  while (current < num) {
+    sequence.push(current);
+    [current, next] = [next, current + next];
+    i++;
+  }
+
+  return sequence;
+};
+
+console.log(getFibSequenceUpToNum(500));
+console.log(getFibSequenceUpToNum(1000));
 
 const productFib = prod => {
   const res = [];
