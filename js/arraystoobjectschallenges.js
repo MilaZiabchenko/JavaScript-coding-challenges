@@ -111,6 +111,7 @@ console.table(getHslColors(colorsData));
 
 // Third iteration: acc = { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }, cur = { hue: 360, color: 'red' }, so when acc is spread inside the object, our function returns the final value
 
+// Counting all occurrences of array elements => object
 const vehicles = [
   'van',
   'bike',
@@ -125,7 +126,6 @@ const vehicles = [
   'car',
 ];
 
-// Counting all occurrences of array elements => object
 const tallyUpInstances_1 = array =>
   array.reduce((acc, item) => {
     !acc[item] && (acc[item] = 0);
@@ -163,6 +163,48 @@ const tallyUpInstances_3 = array =>
 objectOfCountedVehicleInstances = tallyUpInstances_3(vehicles);
 
 console.log(objectOfCountedVehicleInstances);
+
+// Add up values of multiple arrays of objects => object
+const militaryAidFromUSA = [
+  { HIMARS: 4 },
+  { HIMARS: 4 },
+  { HIMARS: 4 },
+  { HIMARS: 18, NASAMS: 2 },
+  { AVENGERS: 4 },
+  { NASAMS: 6, PATRIOT: 1 },
+  { BRADLEY: 50 },
+];
+
+const militaryAidFromNorway = [
+  {
+    NASAMS: 8,
+  },
+];
+
+const militaryAidFromGermany = [
+  { ['IRIS-T']: 1 },
+  { ['IRIS-T']: 3, PATRIOT: 1, MARDER: 20 },
+];
+
+const addItUp = (...arraysOfData) =>
+  arraysOfData
+    .flat()
+    .flatMap(item => Object.entries(item))
+    .reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: acc[key] ? acc[key] + value : value,
+      }),
+      {}
+    );
+
+const totalMilitaryAid = addItUp(
+  militaryAidFromUSA,
+  militaryAidFromNorway,
+  militaryAidFromGermany
+);
+
+console.table(totalMilitaryAid);
 
 // Sorting object properties by values
 

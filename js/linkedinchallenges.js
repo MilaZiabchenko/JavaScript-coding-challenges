@@ -146,8 +146,9 @@ document
   .getElementById('buttons')
   .addEventListener('click', e => changeBackgroundColor(e));
 
-localStorage.backgroundColor &&
-  (document.body.className = localStorage.backgroundColor);
+if (localStorage.backgroundColor) {
+  document.body.className = localStorage.backgroundColor;
+}
 
 // Challenge 7
 

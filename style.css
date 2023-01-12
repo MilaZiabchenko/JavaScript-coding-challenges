@@ -10,17 +10,26 @@
   box-sizing: border-box;
 }
 
-body {
-  min-height: 100vh;
+body,
+header {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+body {
+  min-height: 100vh;
+  padding: 3.5rem;
   align-items: center;
-  padding: 3rem;
   font-family: 'Gloria Hallelujah', cursive;
   text-align: center;
   color: var(--primary-color);
   background-color: hsl(229, 100%, 25%);
+}
+
+header {
+  height: 200px;
+  width: 100%;
 }
 
 h1 {

@@ -1,4 +1,4 @@
-import { recentDates } from './constants.js';
+import { RECENT_DATES } from './utils/recentdates.js';
 
 const calcDaysDiffBetweenDates = (prevDate, nextDate) => {
   const date1 = new Date(prevDate);
@@ -19,7 +19,7 @@ const calcPeriods = array => {
   return periods;
 };
 
-const recentPeriods = calcPeriods(recentDates);
+const recentPeriods = calcPeriods(RECENT_DATES);
 
 console.log(recentPeriods);
 
@@ -39,7 +39,7 @@ const calcNextDate = (lastDate, days) => {
 
 console.log(
   `My next cycle is expected on ${calcNextDate(
-    recentDates.at(-1),
+    RECENT_DATES.at(-1),
     calcAveragePeriod()
   )}.`
 );
@@ -466,7 +466,8 @@ let word = 'RaceCar';
 console.log(palindrome(word));
 console.log(word.toLowerCase().split('').reverse().join(''));
 
-const capitalizeFirstLetter = ([first, ...rest]) => first.toUpperCase() + rest.join('');
+const capitalizeFirstLetter = ([first, ...rest]) =>
+  first.toUpperCase() + rest.join('');
 
 console.log(capitalizeFirstLetter('teo'));
 
