@@ -235,6 +235,37 @@ const findAllIndices = (array, element) => {
 console.log(findDuplicates(array));
 console.log(findAllIndices(array, 37));
 
+const allElementsOfTwoArraysAreEqual_1 = (arr_1, arr_2) => {
+  if (arr_1.length !== arr_2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr_1.length; i++) {
+    if (arr_1[i] !== arr_2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const allElementsOfTwoArraysAreEqual_2 = (arr_1, arr_2) => {
+  if (arr_1.length !== arr_2.length) {
+    return false;
+  }
+
+  return arr_1.every((el, i) => el === arr_2[i]);
+};
+
+const arr_1 = [1, 3, 3, 5, 2];
+const arr_2 = [1, 3, 3, 5, 2];
+const arr_3 = [1, 3, 3, 5, 3];
+
+console.log(allElementsOfTwoArraysAreEqual_1(arr_1, arr_2));
+console.log(allElementsOfTwoArraysAreEqual_1(arr_1, arr_3));
+console.log(allElementsOfTwoArraysAreEqual_2(arr_1, arr_2));
+console.log(allElementsOfTwoArraysAreEqual_2(arr_1, arr_3));
+
 const zipWith = (fn, arr1, arr2) => {
   const array = [];
 
@@ -336,7 +367,7 @@ const countPairs = gloves => {
   const obj = gloves.reduce(
     (acc, glove) => ({
       ...acc,
-      [glove]: acc[glove] ? acc[glove] + 1 : 1,
+      [glove]: acc[glove] ? acc[glove] + 1 : 1
     }),
     {}
   );
@@ -562,7 +593,7 @@ DNAStrand.pairs = {
   A: 'T',
   T: 'A',
   C: 'G',
-  G: 'C',
+  G: 'C'
 };
 
 console.log(DNAStrand(''));
