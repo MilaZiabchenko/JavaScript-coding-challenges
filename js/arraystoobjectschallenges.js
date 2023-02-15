@@ -27,7 +27,7 @@ console.log(techObject_4);
 // Array => array of objects
 const arrayOfTechObjects = techArray.map((technology, index) => ({
   id: index + 1,
-  technology: technology,
+  technology: technology
 }));
 
 console.log(arrayOfTechObjects);
@@ -35,7 +35,7 @@ console.log(arrayOfTechObjects);
 // Array of arrays => object
 const personData = [
   ['name', 'Kate'],
-  ['city', 'New York'],
+  ['city', 'New York']
 ];
 
 const personObject_1 = personData.reduce(
@@ -58,7 +58,7 @@ console.log(personObject_3);
 
 // Array of arrays => array of objects
 const arrayOfPersonObjects = personData.map(([key, value]) => ({
-  [key]: value,
+  [key]: value
 }));
 
 console.log(arrayOfPersonObjects);
@@ -67,7 +67,7 @@ console.log(arrayOfPersonObjects);
 const trafficLightsData = [
   { key: 'red', value: '🔴' },
   { key: 'yellow', value: '🟡' },
-  { key: 'green', value: '🟢' },
+  { key: 'green', value: '🟢' }
 ];
 
 const assembleTrafficLight = array => {
@@ -85,14 +85,14 @@ console.log(assembleTrafficLight(trafficLightsData));
 const colorsData = [
   { hue: 120, color: 'green' },
   { hue: 240, color: 'blue' },
-  { hue: 360, color: 'red' },
+  { hue: 360, color: 'red' }
 ];
 
 const getHslColors = array => {
   const hslColors = array.reduce(
     (acc, cur) => ({
       ...acc,
-      [cur.color]: `hsl(${cur.hue}, 100%, 52%)`,
+      [cur.color]: `hsl(${cur.hue}, 100%, 52%)`
     }),
     {}
   );
@@ -123,7 +123,7 @@ const vehicles = [
   'truck',
   'truck',
   'bike',
-  'car',
+  'car'
 ];
 
 const tallyUpInstances_1 = array =>
@@ -172,18 +172,18 @@ const militaryAidFromUSA = [
   { HIMARS: 18, NASAMS: 2 },
   { AVENGERS: 4 },
   { NASAMS: 6, PATRIOT: 1 },
-  { BRADLEY: 50 },
+  { BRADLEY: 50 }
 ];
 
 const militaryAidFromNorway = [
   {
-    NASAMS: 8,
-  },
+    NASAMS: 8
+  }
 ];
 
 const militaryAidFromGermany = [
   { ['IRIS-T']: 1 },
-  { ['IRIS-T']: 3, PATRIOT: 1, MARDER: 20 },
+  { ['IRIS-T']: 3, PATRIOT: 1, MARDER: 50 }
 ];
 
 const addItUp = (...arraysOfData) =>
@@ -193,7 +193,7 @@ const addItUp = (...arraysOfData) =>
     .reduce(
       (acc, [key, value]) => ({
         ...acc,
-        [key]: acc[key] ? acc[key] + value : value,
+        [key]: acc[key] ? acc[key] + value : value
       }),
       {}
     );
@@ -206,12 +206,27 @@ const totalMilitaryAid = addItUp(
 
 console.table(totalMilitaryAid);
 
-// Sorting object properties by values
+// Sorting object by keys
+const sortObjectByKeys = object => {
+  const sortedObject = Object.keys(object)
+    .sort()
+    .reduce((acc, key) => ({ ...acc, [key]: object[key] }), {});
+
+  return sortedObject;
+};
+
+const objectOfVehiclesSortedByKeysAlphabetically = sortObjectByKeys(
+  objectOfCountedVehicleInstances
+);
+
+console.log(objectOfVehiclesSortedByKeysAlphabetically);
+
+// Sorting object by values
 
 // 1. using Object.keys(), sort(), and reduce()
 const sortObjectOfVehiclesByFrequencyOfInstances_1 = object => {
   const sortedObject = Object.keys(object)
-    .sort((key1, key2) => object[key2] - object[key1])
+    .sort((prev_key, next_key) => object[next_key] - object[prev_key])
     .reduce((acc, key) => ({ ...acc, [key]: object[key] }), {});
 
   return sortedObject;
@@ -255,7 +270,7 @@ objectOfSortedVehicleInstances = sortObjectOfVehiclesByFrequencyOfInstances_3(
 console.log(objectOfSortedVehicleInstances);
 
 const arrayOfVehicleInstancesSortedByFrequency = [
-  ...Object.keys(objectOfSortedVehicleInstances),
+  ...Object.keys(objectOfSortedVehicleInstances)
 ];
 
 console.log(arrayOfVehicleInstancesSortedByFrequency);
@@ -269,7 +284,7 @@ const birds = [
   'catbird',
   'rook',
   'chaffinch',
-  'rook',
+  'rook'
 ];
 
 const sizes = [
@@ -281,14 +296,14 @@ const sizes = [
   'medium',
   'big',
   'small',
-  'big',
+  'big'
 ];
 
 const tallyBirdsOfEachType = (array = birds) =>
   array.reduce(
     (acc, bird) => ({
       ...acc,
-      [bird]: acc[bird] ? acc[bird] + 1 : 1,
+      [bird]: acc[bird] ? acc[bird] + 1 : 1
     }),
     {}
   );
@@ -319,7 +334,7 @@ console.log(birdsObject);
 const newBirdsObject = birds.reduce(
   (acc, bird, index) => ({
     ...acc,
-    [`bird_${index + 1}`]: bird,
+    [`bird_${index + 1}`]: bird
   }),
   {}
 );
@@ -329,7 +344,7 @@ console.log(newBirdsObject);
 const combineBirdsAndSizesWithMap = () => {
   const arrayOfObjects = birds.map((bird, index) => ({
     bird,
-    size: sizes[index],
+    size: sizes[index]
   }));
 
   return arrayOfObjects;
@@ -357,7 +372,7 @@ const createObjectOfBirdsWithSizes_1 = () => {
   const object = birds.reduce(
     (acc, bird, index) => ({
       ...acc,
-      [bird]: sizes[index],
+      [bird]: sizes[index]
     }),
     {}
   );
@@ -387,7 +402,7 @@ const createObjectOfBirdsWithSizes_3 = () => {
   const object = arrayOfObjectsWithBirdsAndSizes.reduce(
     (acc, { bird, size }) => ({
       ...acc,
-      [bird]: size,
+      [bird]: size
     }),
     {}
   );
@@ -423,7 +438,7 @@ console.log(arraysOfBirdsAndSizes);
 const createObjectsWithBirdsAndSizesWithMap = () => {
   const arrayOfObjects = arraysOfBirdsAndSizes.map(([bird, size]) => ({
     bird,
-    size,
+    size
   }));
 
   return arrayOfObjects;
@@ -475,7 +490,7 @@ const createDescriptiveBirdsObjects = () => {
       acc[index] = {
         [`Description_${key}`]: `${bird.charAt(0).toUpperCase()}${bird.slice(
           1
-        )} is a ${size} bird.`,
+        )} is a ${size} bird.`
       };
 
       return acc;
@@ -493,14 +508,14 @@ console.log(arrayOfDescriptiveBirdsObjects);
 const financesData = [
   ['buy', 'usd', 50],
   ['sell', 'usd', 100],
-  ['sell', 'eur', 200],
+  ['sell', 'eur', 200]
 ];
 
 const makeTableOfTransactionsWithMap = () => {
   const transactions = financesData.map(([operation, currency, amount]) => ({
     operation,
     currency,
-    amount,
+    amount
   }));
 
   return transactions;
@@ -532,7 +547,7 @@ const calcBudget = () => {
         iteration: index + 1,
         total: `${total}$`,
         operation,
-        amount: `${amount}$`,
+        amount: `${amount}$`
       });
 
       operation === 'buy' ? (total -= amount) : (total += amount);
@@ -559,7 +574,7 @@ const pancakesGroup = [
   { name: 'Yaroslava', technology: 'Node' },
   { name: 'Mila', technology: 'React' },
   { name: 'Toma', technology: 'React' },
-  { name: 'S L a V u N I A', technology: 'React' },
+  { name: 'S L a V u N I A', technology: 'React' }
 ];
 
 const combineNameWithTech_1 = () => {
@@ -580,7 +595,7 @@ const combineNameWithTech_2 = () => {
   const object = pancakesGroup.reduce(
     (acc, { name, technology }) => ({
       ...acc,
-      [name]: technology,
+      [name]: technology
     }),
     {}
   );
@@ -620,7 +635,7 @@ const updatedPancakesGroup = pancakesGroup.map(pancake =>
 const expandedPancakesGroup = [
   ...updatedPancakesGroup,
   { name: 'Bodia', technology: 'Angular' },
-  { name: 'Maria', technology: 'React' },
+  { name: 'Maria', technology: 'React' }
 ];
 
 console.log(pancakesGroup);
