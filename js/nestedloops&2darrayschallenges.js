@@ -76,7 +76,7 @@ const findAnagrams = (word, arrayOfWords) => {
   const sortedCharsOfTheWord = [...word].sort();
   const anagrams = [];
 
-  arrayOfWords.filter(entry => {
+  arrayOfWords.forEach(entry => {
     const sortedCharsOfTheEntry = [...entry].sort();
     let matchesCount = 0;
 
@@ -196,7 +196,7 @@ console.log(sortOddNumbersOfTheArray([5, 17, 82, 15, 8, 3, 2]));
 const arrayOfArrays = [
   [0, 5],
   [10, 15],
-  [20, 0],
+  [20, 0]
 ];
 
 let calcSum = matrix => {
@@ -243,7 +243,7 @@ const array = [1, -2, 3, 4, -5, -4, 3, 2, 1];
 const ranges = [
   [1, 3],
   [0, 4],
-  [6, 8],
+  [6, 8]
 ];
 
 console.log(calcMaxSum(array, ranges));
@@ -276,7 +276,7 @@ console.log(
   sumIntervals([
     [1, 2],
     [6, 10],
-    [11, 15],
+    [11, 15]
   ])
 );
 
@@ -284,7 +284,7 @@ console.log(
   sumIntervals([
     [1, 4],
     [7, 10],
-    [3, 5],
+    [3, 5]
   ])
 );
 
@@ -294,7 +294,7 @@ console.log(
     [10, 20],
     [1, 6],
     [16, 19],
-    [5, 11],
+    [5, 11]
   ])
 );
 
@@ -304,7 +304,7 @@ const playlistOfRadioheadSongs = [
   ['Karma Police', 'OK Computer', 7.97, '04:24'],
   ['No Surprises', 'OK Computer', 8.53, '03:49'],
   ['Creep', 'Pablo Honey', 9.47, '03:58'],
-  ['I Promise', 'OK Computer', 6.53, '03:59'],
+  ['I Promise', 'OK Computer', 6.53, '03:59']
 ];
 
 let tracksDetails = playlistOfRadioheadSongs.map(
@@ -312,7 +312,7 @@ let tracksDetails = playlistOfRadioheadSongs.map(
     title,
     album,
     popularity,
-    length,
+    length
   })
 );
 
