@@ -101,36 +101,6 @@ console.log(findAnagrams('cinema', words));
 console.log(findAnagrams('doom', words));
 console.log(findAnagrams('file', words));
 
-const findHighestScoringWord = sentence => {
-  const words = sentence.split(' ');
-  const alphabetMap = {};
-
-  for (let i = 'A'.charCodeAt(), j = 0; i <= 'z'.charCodeAt(); i++, j++) {
-    alphabetMap[i] = j;
-  }
-
-  const highestScoringWord = { word: '', score: 0 };
-
-  words.forEach(word => {
-    const chars = word.split('');
-
-    const sumOfUnicodeValuesOfTheWord = chars.reduce(
-      (count, char) => count + alphabetMap[char.charCodeAt()],
-      0
-    );
-
-    if (sumOfUnicodeValuesOfTheWord > highestScoringWord.score) {
-      highestScoringWord.word = word;
-      highestScoringWord.score = sumOfUnicodeValuesOfTheWord;
-    }
-  });
-
-  return highestScoringWord.word;
-};
-
-console.log(findHighestScoringWord('Man, I need a taxi up to Venice'));
-console.log(findHighestScoringWord('We are climbing up the volcano Vesuvius'));
-
 const findMaxDifference = array => {
   let maxDiff = array[1] - array[0];
 
@@ -222,81 +192,6 @@ calcSum = matrix => {
 };
 
 console.log(calcSum(arrayOfArrays));
-
-const calcMaxSum = (array, ranges) => {
-  let maxSum = -Infinity;
-  let currentSum = 0;
-
-  ranges.forEach(([from, to]) => {
-    for (let i = from; i <= to; i++) {
-      currentSum += array[i];
-    }
-
-    currentSum > maxSum && (maxSum = currentSum);
-    currentSum = 0;
-  });
-
-  return maxSum;
-};
-
-const array = [1, -2, 3, 4, -5, -4, 3, 2, 1];
-const ranges = [
-  [1, 3],
-  [0, 4],
-  [6, 8]
-];
-
-console.log(calcMaxSum(array, ranges));
-
-const sumIntervals = intervals => {
-  const newIntervals = [];
-  let topInterval = null;
-  let sum = 0;
-
-  const sortedIntervals = intervals.sort((prev, next) => prev[0] - next[0]);
-
-  newIntervals.push(sortedIntervals[0]);
-
-  for (let i = 1; i < sortedIntervals.length; i++) {
-    topInterval = newIntervals[newIntervals.length - 1];
-
-    if (topInterval[1] < sortedIntervals[i][0]) {
-      newIntervals.push(sortedIntervals[i]);
-    } else if (topInterval[1] < sortedIntervals[i][1]) {
-      topInterval[1] = sortedIntervals[i][1];
-    }
-  }
-
-  newIntervals.forEach(([start, end]) => (sum += end - start));
-
-  return sum;
-};
-
-console.log(
-  sumIntervals([
-    [1, 2],
-    [6, 10],
-    [11, 15]
-  ])
-);
-
-console.log(
-  sumIntervals([
-    [1, 4],
-    [7, 10],
-    [3, 5]
-  ])
-);
-
-console.log(
-  sumIntervals([
-    [1, 5],
-    [10, 20],
-    [1, 6],
-    [16, 19],
-    [5, 11]
-  ])
-);
 
 const playlistOfRadioheadSongs = [
   ['Paranoid Android', 'OK Computer', 7.15, '06:27'],

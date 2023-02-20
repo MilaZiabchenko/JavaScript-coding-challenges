@@ -1,4 +1,4 @@
-import { RECENT_DATES } from './utils/recentdates.js';
+import { RECENT_DATES } from './utils/recent-dates.js';
 
 const calcDaysDiffBetweenDates = (prevDate, nextDate) => {
   const date1 = new Date(prevDate);
@@ -45,17 +45,9 @@ console.log(
 );
 
 const reverseNumber = num => {
-  let numStr = num + ''; // number => string
-  let numArr = numStr.split('');
-  let reversedNum = [];
+  const reversedNumString = num.toString().split('').reverse().join('');
 
-  for (let i = numArr.length - 1; i >= 0; i--) {
-    reversedNum.push(numArr[i]);
-  }
-
-  reversedNum = reversedNum + ''; //array => string
-  reversedNum = reversedNum.replaceAll(',', '');
-  reversedNum = parseInt(reversedNum) * Math.sign(num);
+  const reversedNum = parseInt(reversedNumString) * Math.sign(num);
 
   return reversedNum;
 };
@@ -117,16 +109,6 @@ const isSorted_2 = array =>
 const isSorted_3 = array =>
   array.every((value, index) => index === 0 || array[index - 1] < value);
 
-const adjacentElementsMaxProduct = array => {
-  let productsArr = [];
-
-  for (let i = 0; i < array.length - 1; i++) {
-    productsArr.push(array[i] * array[i + 1]);
-  }
-
-  return Math.max(...productsArr);
-};
-
 const unsortedArray = [1, 55, 17, 77, 709, 95, -10, 100, 205];
 const sortedArray = [-10, 0, 1, 10, 77, 500, 709];
 
@@ -139,7 +121,6 @@ console.log(isSorted_2(sortedArray));
 console.log(isSorted_2(unsortedArray));
 console.log(isSorted_3(sortedArray));
 console.log(isSorted_3(unsortedArray));
-console.log(adjacentElementsMaxProduct(unsortedArray));
 
 const removeFalsy = array => array.filter(Boolean);
 
@@ -191,32 +172,11 @@ console.log(arrOfUniqueValuesOldWay);
 console.log(arrOfUniqueValuesNewWay);
 console.log(arrOfDuplicates);
 
-const countOccurrences = (arr, targetValue) =>
-  arr.reduce((acc, value) => (value === targetValue ? acc + 1 : acc), 0);
+const countOccurrences = (array, targetValue) =>
+  array.reduce((acc, value) => (value === targetValue ? acc + 1 : acc), 0);
 
 console.log(countOccurrences(array, 5));
 console.log(countOccurrences([5, 5, 2, 1, 2, 3, 5], 5));
-
-const deleteNth = (array, n) => {
-  const newArray = [...array];
-
-  newArray.map(el => {
-    let arrOfDuplicates = newArray.filter(num => num === el);
-
-    if (arrOfDuplicates.length > n) {
-      for (let i = 0; i < arrOfDuplicates.length - n; i++) {
-        newArray.splice(newArray.lastIndexOf(el), 1);
-      }
-    }
-  });
-
-  return newArray;
-};
-
-console.log(deleteNth([1, 1, 1, 1, 2], 2));
-console.log(deleteNth([20, 37, 20, 21], 1));
-console.log(deleteNth([10, 17, 10, 18, 2], 1));
-console.log(deleteNth([1, 1, 3, 3, 7, 2, 2, 2, 2], 3));
 
 const findAllIndices = (array, element) => {
   let indices = [];
@@ -265,41 +225,6 @@ console.log(allElementsOfTwoArraysAreEqual_1(arr_1, arr_2));
 console.log(allElementsOfTwoArraysAreEqual_1(arr_1, arr_3));
 console.log(allElementsOfTwoArraysAreEqual_2(arr_1, arr_2));
 console.log(allElementsOfTwoArraysAreEqual_2(arr_1, arr_3));
-
-const zipWith = (fn, arr1, arr2) => {
-  const array = [];
-
-  const minLength = Math.min(arr1.length, arr2.length);
-
-  for (let i = 0; i < minLength; i++) {
-    array.push(fn(arr1[i], arr2[i]));
-  }
-
-  return array;
-};
-
-console.log(zipWith(Math.pow, [10, 10, 10, 10], [0, 1, 2, 3]));
-console.log(zipWith(Math.max, [1, 4, 7, 1, 4, 7], [4, 7, 1, 4, 7, 1]));
-console.log(zipWith((a, b) => a + b, [0, 1, 2, 3], [0, 1, 2, 3]));
-
-const peak = array => {
-  let index = -1;
-
-  for (let i = 0; i < array.length; i++) {
-    if (
-      array.slice(0, i).reduce((total, current) => total + current, 0) ===
-      array.slice(i + 1).reduce((total, current) => total + current, 0)
-    ) {
-      index = i;
-    }
-  }
-
-  return index;
-};
-
-console.log(peak([1, 2, 3, 5, 3, 2, 1]));
-console.log(peak([1, 12, 3, 3, 6, 3, 1]));
-console.log(peak([10, 20, 30, 40]));
 
 const isLuckyTicket = digits => {
   digits = digits.toString();
@@ -350,58 +275,6 @@ const calculateTotalSumOfLuckyTickets = digits => {
 
 console.log(calculateTotalSumOfLuckyTickets(999_999));
 
-const moveZerosToTheEnd = array => {
-  const arrOfNonZeros = [];
-  const arrOfZeros = [];
-
-  array.map(num =>
-    num !== 0 ? arrOfNonZeros.push(num) : arrOfZeros.push(num)
-  );
-
-  return arrOfNonZeros.concat(arrOfZeros);
-};
-
-console.log(moveZerosToTheEnd([1, 0, 2, 0, 0, 3]));
-
-const countPairs = gloves => {
-  const obj = gloves.reduce(
-    (acc, glove) => ({
-      ...acc,
-      [glove]: acc[glove] ? acc[glove] + 1 : 1
-    }),
-    {}
-  );
-
-  let count = 0;
-
-  for (let item in obj) {
-    count += Math.floor(obj[item] / 2);
-  }
-
-  return count;
-};
-
-console.log(countPairs(['red', 'green', 'blue']));
-console.log(countPairs(['red', 'green', 'red', 'blue', 'blue']));
-console.log(countPairs(['red', 'red', 'red', 'red', 'red', 'red']));
-
-const findAllGlovesOfAColor = (gloves, color) =>
-  gloves.reduce((acc, cur) => acc + (cur === color ? 1 : 0), 0);
-
-console.log(
-  findAllGlovesOfAColor(
-    ['green', 'red', 'green', 'red', 'blue', 'blue', 'green'],
-    'green'
-  )
-);
-
-console.log(
-  findAllGlovesOfAColor(
-    ['green', 'red', 'green', 'red', 'blue', 'blue', 'green'],
-    'black'
-  )
-);
-
 const findSumOfUnicodeValuesOfTheWord = word => {
   const chars = word.split('');
 
@@ -414,37 +287,16 @@ console.log(findSumOfUnicodeValuesOfTheWord('taxi'));
 console.log(findSumOfUnicodeValuesOfTheWord('Venice'));
 console.log(findSumOfUnicodeValuesOfTheWord('Vesuvius'));
 
-const whoLikesThis = names => {
-  if (!Array.isArray(names) || names.length <= 0) return;
-
-  switch (names.length) {
-    case 0:
-      return 'No one likes this';
-    case 1:
-      return `${names[0]} likes this`;
-    case 2:
-      return `${names[0]} and ${names[1]} like this`;
-    case 3:
-      return `${names[0]}, ${names[1]} and ${names[2]} like this`;
-    default:
-      return `${names[0]}, ${names[1]} and ${
-        names.length - 2
-      } others like this`;
-  }
-};
-
-console.log(whoLikesThis(['Mila', 'Leo']));
-
 const countVowels = string => {
   const searchedChars = string.match(/[aeiouy]/g);
 
   return searchedChars ? searchedChars.length : 0;
 };
 
+const sentence = 'Ukraine will always be free';
+
 console.log(
-  `${countVowels(
-    whoLikesThis(['Bogdan'])
-  )} vowels are found in the phrase '${whoLikesThis(['Bogdan'])}'.`
+  `${countVowels(sentence)} vowels are found in the phrase '${sentence}'.`
 );
 
 const isValidJSON = string => {
@@ -458,44 +310,6 @@ const isValidJSON = string => {
 
 console.log(isValidJSON('{"name":"Danny","id":12345}'));
 console.log(isValidJSON('{"name":"Danny",id:12345}'));
-
-const domainName = url =>
-  url
-    .split('://')[1]
-    .replace('www.', '')
-    .replace('.com', '')
-    .split('/')[0]
-    .split('.')[0];
-
-console.log(domainName('http://google.co.jp'));
-console.log(domainName('http://github.com/carbonfive/raygun'));
-console.log(domainName('http://www.zombie-bites.com'));
-console.log(domainName('https://www.cnet.com'));
-
-const palindrome = string => {
-  const re = /[\W_]/g;
-  const lowRegStr = string.toLowerCase().replace(re, '');
-  const splittedStr = lowRegStr.split('');
-
-  let reversedStrArr = [];
-
-  for (let i = splittedStr.length - 1; i >= 0; i--) {
-    reversedStrArr.push(splittedStr[i]);
-  }
-
-  const reversedStr = reversedStrArr.join('');
-
-  return reversedStr === lowRegStr;
-};
-
-console.log(palindrome('A man, a plan, a canal. Panama'));
-console.log(palindrome('A man, a plan, a canal. Panama!'));
-console.log(palindrome('A man, a plan, a canal. Panamas'));
-
-let word = 'RaceCar';
-
-console.log(palindrome(word));
-console.log(word.toLowerCase().split('').reverse().join(''));
 
 const capitalizeFirstLetter = ([first, ...rest]) =>
   first.toUpperCase() + rest.join('');
@@ -513,72 +327,6 @@ console.log(makeAcronym('teo meo'));
 const getFullName = (...names) => names.filter(Boolean).join(' ');
 
 console.log(getFullName('Leo', 'Ziablick'));
-
-const swapCase = string => {
-  const array = string.split('');
-  const newArr = [];
-
-  for (let el of array) {
-    if (el === el.toLowerCase()) {
-      newArr.push(el.toUpperCase());
-    } else if (el === el.toUpperCase()) {
-      newArr.push(el.toLowerCase());
-    } else {
-      newArr.push(el);
-    }
-  }
-
-  return newArr.join('');
-};
-
-console.log(swapCase(`Hey, how's Michaela?`));
-
-const toCamelCase = string => {
-  const newArr = [];
-
-  const createNewStr = sign => {
-    const splittedStr = string.split(sign);
-
-    splittedStr.map(word => {
-      splittedStr.indexOf(word) === 0
-        ? newArr.push(word)
-        : newArr.push(`${word.charAt(0).toUpperCase()}${word.slice(1)}`);
-    });
-  };
-
-  if (string.includes('-')) {
-    createNewStr('-');
-
-    return newArr.join('');
-  } else if (string.includes('_')) {
-    createNewStr('_');
-
-    return newArr.join('');
-  } else {
-    return string;
-  }
-};
-
-console.log(toCamelCase('_some_variable'));
-console.log(toCamelCase('Strange-naming'));
-
-const splitStringIntoPairs = string => {
-  const array = string.split('');
-
-  if (array.length % 2 !== 0) {
-    array.push('_');
-  }
-
-  const subArr = [];
-
-  for (let i = 0; i < array.length; i += 2) {
-    subArr.push(array[i] + array[i + 1]);
-  }
-
-  return subArr;
-};
-
-console.log(splitStringIntoPairs('abcdef12345'));
 
 const buildASquare = num => ('+'.repeat(num) + '\n').repeat(num).trim();
 
@@ -600,39 +348,6 @@ console.log(DNAStrand(''));
 console.log(DNAStrand('ATGC'));
 console.log(DNAStrand('GTAT'));
 console.log(DNAStrand('AAAA'));
-
-const validBraces = braces => {
-  let tracer = [];
-
-  for (let brace of braces) {
-    if (brace === '(' || brace === '{' || brace === '[') {
-      tracer.push(brace);
-
-      if (tracer.length === 0) return false;
-    } else {
-      let lastBrace = tracer[tracer.length - 1];
-
-      if (
-        (lastBrace === '[' && brace === ']') ||
-        (lastBrace === '{' && brace === '}') ||
-        (lastBrace === '(' && brace === ')')
-      ) {
-        tracer.pop();
-      } else {
-        break;
-      }
-    }
-  }
-
-  return tracer.length === 0;
-};
-
-console.log(validBraces('()'));
-console.log(validBraces('(){}[]'));
-console.log(validBraces('([{}])'));
-console.log(validBraces('[({})](]'));
-console.log(validBraces('[(])'));
-console.log(validBraces('(}'));
 
 // Fibonacci numbers or Fibonacci sequence is a sequence of numbers that is calculated by adding values of two preceding numbers. It’s also known as the golden ratio and it’s widely found in nature.
 
@@ -683,29 +398,3 @@ const getFibSequenceUpToNum = num => {
 
 console.log(getFibSequenceUpToNum(500));
 console.log(getFibSequenceUpToNum(1000));
-
-const productFib = prod => {
-  const res = [];
-  const sequence = [0, 1];
-
-  for (let i = 2; i <= Math.sqrt(prod); i++) {
-    sequence.push(sequence[i - 2] + sequence[i - 1]);
-  }
-
-  for (let j = 0; j < sequence.length; j++) {
-    if (sequence[j] * sequence[j + 1] === prod) {
-      res.push(sequence[j], sequence[j + 1], true);
-    }
-    if (
-      sequence[j - 1] * sequence[j] < prod &&
-      sequence[j] * sequence[j + 1] > prod
-    ) {
-      res.push(sequence[j], sequence[j + 1], false);
-    }
-  }
-
-  return res;
-};
-
-console.log(productFib(714));
-console.log(productFib(800));
