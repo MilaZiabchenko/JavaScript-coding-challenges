@@ -27,7 +27,7 @@ console.log(techObject_4);
 // Array => array of objects
 const arrayOfTechObjects = techArray.map((technology, index) => ({
   id: index + 1,
-  technology: technology
+  technology
 }));
 
 console.log(arrayOfTechObjects);
@@ -39,14 +39,14 @@ const personData = [
 ];
 
 const personObject_1 = personData.reduce(
-  (acc, cur) => Object.assign(acc, { [cur[0]]: cur[1] }),
+  (acc, [key, value]) => Object.assign(acc, { [key]: value }),
   {}
 );
 
 console.log(personObject_1);
 
 const personObject_2 = personData.reduce(
-  (acc, cur) => ({ ...acc, [cur[0]]: cur[1] }),
+  (acc, [key, value]) => ({ ...acc, [key]: value }),
   {}
 );
 
@@ -70,46 +70,32 @@ const trafficLightsData = [
   { key: 'green', value: '🟢' }
 ];
 
-const assembleTrafficLight = array => {
-  const lights = array.reduce((acc, obj) => {
-    acc[obj.key] = obj.value;
-
-    return acc;
-  }, {});
-
-  return lights;
-};
-
-console.log(assembleTrafficLight(trafficLightsData));
-
-const colorsData = [
-  { hue: 120, color: 'green' },
-  { hue: 240, color: 'blue' },
-  { hue: 360, color: 'red' }
-];
-
-const getHslColors = array => {
-  const hslColors = array.reduce(
-    (acc, cur) => ({
+const assembleTrafficLightObject = array =>
+  array.reduce(
+    (acc, { key, value }) => ({
       ...acc,
-      [cur.color]: `hsl(${cur.hue}, 100%, 52%)`
+      [key]: value
     }),
     {}
   );
 
-  return hslColors;
-};
+console.log(assembleTrafficLightObject(trafficLightsData));
 
-console.log(getHslColors(colorsData));
-console.table(getHslColors(colorsData));
+const colorsData = [
+  { color: 'green', hue: 120 },
+  { color: 'blue', hue: 240 },
+  { color: 'red', hue: 360 }
+];
 
-// Here is how it works:
+const getHSLColorsObject = array =>
+  array.reduce((acc, { color, hue }) => {
+    acc[color] = `hsl(${hue}, 100%, 52%)`;
 
-// reduce is initialized with an empty object ({} at the end), therefore first iteration variables are acc = {}, cur = { hue: 120, color: 'green' }. This function returns an object - this is why its body is wrapped in parentheses => ({ ... }). Spread operator doesn't do anything on the first iteration, so 'green: hsl(120, 100%, 52%)' is set as the first item.
+    return acc;
+  }, {});
 
-// On the second iteration variables are acc = { green: hsl(120, 100%, 52%) }, cur = { hue: 240, color: 'blue' }. Here the spread operator expands acc and the function returns { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }.
-
-// Third iteration: acc = { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }, cur = { hue: 360, color: 'red' }, so when acc is spread inside the object, our function returns the final value
+console.log(getHSLColorsObject(colorsData));
+console.table(getHSLColorsObject(colorsData));
 
 // Counting all occurrences of array elements => object
 const vehicles = [
@@ -126,7 +112,7 @@ const vehicles = [
   'car'
 ];
 
-const tallyUpInstances_1 = array =>
+const tallyUpArrayInstances_1 = array =>
   array.reduce((acc, item) => {
     !acc[item] && (acc[item] = 0);
 
@@ -135,11 +121,11 @@ const tallyUpInstances_1 = array =>
     return acc;
   }, {});
 
-let objectOfCountedVehicleInstances = tallyUpInstances_1(vehicles);
+const objectOfCountedVehicleInstances_1 = tallyUpArrayInstances_1(vehicles);
 
-console.log(objectOfCountedVehicleInstances);
+console.log(objectOfCountedVehicleInstances_1);
 
-const tallyUpInstances_2 = array =>
+const tallyUpArrayInstances_2 = array =>
   array.reduce((acc, item) => {
     if (item in acc) {
       acc[item] += 1;
@@ -150,43 +136,41 @@ const tallyUpInstances_2 = array =>
     return acc;
   }, {});
 
-objectOfCountedVehicleInstances = tallyUpInstances_2(vehicles);
+const objectOfCountedVehicleInstances_2 = tallyUpArrayInstances_2(vehicles);
 
-console.log(objectOfCountedVehicleInstances);
+console.log(objectOfCountedVehicleInstances_2);
 
-const tallyUpInstances_3 = array =>
+const tallyUpArrayInstances_3 = array =>
   array.reduce(
     (acc, item) => ({ ...acc, [item]: acc[item] ? acc[item] + 1 : 1 }),
     {}
   );
 
-objectOfCountedVehicleInstances = tallyUpInstances_3(vehicles);
+const objectOfCountedVehicleInstances_3 = tallyUpArrayInstances_3(vehicles);
 
-console.log(objectOfCountedVehicleInstances);
+console.log(objectOfCountedVehicleInstances_3);
 
-// Add up values of multiple arrays of objects => object
+// Adding up values of multiple arrays of objects => object
 const militaryAidFromUSA = [
-  { HIMARS: 4 },
-  { HIMARS: 4 },
-  { HIMARS: 4 },
+  { HIMARS: 20 },
   { HIMARS: 18, NASAMS: 2 },
-  { AVENGERS: 4 },
   { NASAMS: 6, PATRIOT: 1 },
-  { BRADLEY: 50 }
+  { BRADLEY: 109, ABRAMS: 31 }
 ];
 
-const militaryAidFromNorway = [
+const militaryAidFromPoland = [
   {
-    NASAMS: 8
+    ['MIG-29']: 14,
+    ['LEOPARD 2']: 14
   }
 ];
 
 const militaryAidFromGermany = [
   { ['IRIS-T']: 1 },
-  { ['IRIS-T']: 3, PATRIOT: 1, MARDER: 50 }
+  { ['IRIS-T']: 3, PATRIOT: 1, MARDER: 40, ['LEOPARD 2']: 18 }
 ];
 
-const addItUp = (...arraysOfData) =>
+const addUpArraysOfObjectsValues = (...arraysOfData) =>
   arraysOfData
     .flat()
     .flatMap(item => Object.entries(item))
@@ -198,25 +182,22 @@ const addItUp = (...arraysOfData) =>
       {}
     );
 
-const totalMilitaryAid = addItUp(
+const totalMilitaryAid = addUpArraysOfObjectsValues(
   militaryAidFromUSA,
-  militaryAidFromNorway,
+  militaryAidFromPoland,
   militaryAidFromGermany
 );
 
 console.table(totalMilitaryAid);
 
 // Sorting object by keys
-const sortObjectByKeys = object => {
-  const sortedObject = Object.keys(object)
+const sortObjectByKeys = object =>
+  Object.keys(object)
     .sort()
     .reduce((acc, key) => ({ ...acc, [key]: object[key] }), {});
 
-  return sortedObject;
-};
-
 const objectOfVehiclesSortedByKeysAlphabetically = sortObjectByKeys(
-  objectOfCountedVehicleInstances
+  objectOfCountedVehicleInstances_1
 );
 
 console.log(objectOfVehiclesSortedByKeysAlphabetically);
@@ -224,56 +205,42 @@ console.log(objectOfVehiclesSortedByKeysAlphabetically);
 // Sorting object by values
 
 // 1. using Object.keys(), sort(), and reduce()
-const sortObjectOfVehiclesByFrequencyOfInstances_1 = object => {
-  const sortedObject = Object.keys(object)
+const sortObjectByValues_1 = object =>
+  Object.keys(object)
     .sort((prev_key, next_key) => object[next_key] - object[prev_key])
     .reduce((acc, key) => ({ ...acc, [key]: object[key] }), {});
 
-  return sortedObject;
-};
+const objectOfSortedVehicleInstances_1 = sortObjectByValues_1(
+  objectOfCountedVehicleInstances_1
+);
 
-let objectOfSortedVehicleInstances =
-  sortObjectOfVehiclesByFrequencyOfInstances_1(objectOfCountedVehicleInstances);
-
-console.log(objectOfSortedVehicleInstances);
+console.log(objectOfSortedVehicleInstances_1);
 
 // 2. using Object.entries(), sort(), and reduce()
-const sortObjectOfVehiclesByFrequencyOfInstances_2 = object => {
-  const sortedObject = Object.entries(object)
+const sortObjectByValues_2 = object =>
+  Object.entries(object)
     .sort(([, prev_value], [, next_value]) => next_value - prev_value)
     .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
-  return sortedObject;
-};
-
-objectOfSortedVehicleInstances = sortObjectOfVehiclesByFrequencyOfInstances_2(
-  objectOfCountedVehicleInstances
+const objectOfSortedVehicleInstances_2 = sortObjectByValues_2(
+  objectOfCountedVehicleInstances_2
 );
 
-console.log(objectOfSortedVehicleInstances);
+console.log(objectOfSortedVehicleInstances_2);
 
 // 3. using Object.fromEntries(), Object.entries(), and sort()
-const sortObjectOfVehiclesByFrequencyOfInstances_3 = object => {
-  const sortedObject = Object.fromEntries(
+const sortObjectByValues_3 = object =>
+  Object.fromEntries(
     Object.entries(object).sort(
       ([, prev_value], [, next_value]) => next_value - prev_value
     )
   );
 
-  return sortedObject;
-};
-
-objectOfSortedVehicleInstances = sortObjectOfVehiclesByFrequencyOfInstances_3(
-  objectOfCountedVehicleInstances
+const objectOfSortedVehicleInstances_3 = sortObjectByValues_3(
+  objectOfCountedVehicleInstances_3
 );
 
-console.log(objectOfSortedVehicleInstances);
-
-const arrayOfVehicleInstancesSortedByFrequency = [
-  ...Object.keys(objectOfSortedVehicleInstances)
-];
-
-console.log(arrayOfVehicleInstancesSortedByFrequency);
+console.log(objectOfSortedVehicleInstances_3);
 
 const birds = [
   'chaffinch',
@@ -323,15 +290,16 @@ const birdsSortedByQuantity = sortBirdsByQuantity(amountOfBirdsOfEachType);
 
 console.log(birdsSortedByQuantity);
 
-const birdsObject = birds.reduce((acc, bird, index) => {
-  acc[index + 1] = bird;
+// Mapping one array data to an object of list-like key-value pairs
+const birdsListObject_1 = birds.reduce((acc, bird, index) => {
+  acc[`bird_${index + 1}`] = bird;
 
   return acc;
 }, {});
 
-console.log(birdsObject);
+console.log(birdsListObject_1);
 
-const newBirdsObject = birds.reduce(
+const birdsListObject_2 = birds.reduce(
   (acc, bird, index) => ({
     ...acc,
     [`bird_${index + 1}`]: bird
@@ -339,37 +307,72 @@ const newBirdsObject = birds.reduce(
   {}
 );
 
-console.log(newBirdsObject);
+console.log(birdsListObject_2);
 
-const combineBirdsAndSizesWithMap = () => {
-  const arrayOfObjects = birds.map((bird, index) => ({
+// Combining multiple arrays data in one array of objects
+
+// 1. Specific function implementation:
+
+// using map()
+const combineBirdsAndSizes_1 = () =>
+  birds.map((bird, index) => ({
     bird,
     size: sizes[index]
   }));
 
-  return arrayOfObjects;
-};
+const arrayOfObjectsWithBirdsAndSizes_1 = combineBirdsAndSizes_1();
 
-let arrayOfObjectsWithBirdsAndSizes = combineBirdsAndSizesWithMap();
+console.log(arrayOfObjectsWithBirdsAndSizes_1);
 
-console.log(arrayOfObjectsWithBirdsAndSizes);
+// using reduce()
+const combineBirdsAndSizes_2 = () =>
+  birds.reduce(
+    (acc, bird, index) => [...acc, { bird, size: sizes[index] }],
+    []
+  );
 
-const combineBirdsAndSizesWithReduce = () => {
-  const arrayOfObjects = birds.reduce((acc, bird, index) => {
-    acc[index] = { bird, size: sizes[index] };
+const arrayOfObjectsWithBirdsAndSizes_2 = combineBirdsAndSizes_2();
+
+console.log(arrayOfObjectsWithBirdsAndSizes_2);
+
+// 2. General function implementation:
+
+// using map()
+const combineElementsOfTwoArrays_1 = (array_1, array_2, key_1, key_2) =>
+  array_1.map((item, index) => ({
+    [key_1]: item,
+    [key_2]: array_2[index]
+  }));
+
+const arrayOfObjectsWithBirdsAndSizes_3 = combineElementsOfTwoArrays_1(
+  birds,
+  sizes,
+  'bird',
+  'size'
+);
+
+console.log(arrayOfObjectsWithBirdsAndSizes_3);
+
+// using reduce()
+const combineElementsOfTwoArrays_2 = (array_1, array_2, key_1, key_2) =>
+  array_1.reduce((acc, item, index) => {
+    acc[index] = { [key_1]: item, [key_2]: array_2[index] };
 
     return acc;
   }, []);
 
-  return arrayOfObjects;
-};
+const arrayOfObjectsWithBirdsAndSizes_4 = combineElementsOfTwoArrays_2(
+  birds,
+  sizes,
+  'bird',
+  'size'
+);
 
-arrayOfObjectsWithBirdsAndSizes = combineBirdsAndSizesWithReduce();
+console.log(arrayOfObjectsWithBirdsAndSizes_4);
 
-console.log(arrayOfObjectsWithBirdsAndSizes);
-
-const createObjectOfBirdsWithSizes_1 = () => {
-  const object = birds.reduce(
+// Combining multiple arrays data in one object
+const createObjectOfUniqueBirdsMatchedWithSizes_1 = () =>
+  birds.reduce(
     (acc, bird, index) => ({
       ...acc,
       [bird]: sizes[index]
@@ -377,29 +380,23 @@ const createObjectOfBirdsWithSizes_1 = () => {
     {}
   );
 
-  return object;
-};
+const objectWithBirdsAndSizes_1 = createObjectOfUniqueBirdsMatchedWithSizes_1();
 
-let objectWithBirdsAndSizes = createObjectOfBirdsWithSizes_1();
+console.log(objectWithBirdsAndSizes_1);
 
-console.log(objectWithBirdsAndSizes);
-
-const createObjectOfBirdsWithSizes_2 = () => {
-  const object = birds.reduce((acc, bird, index) => {
+const createObjectOfUniqueBirdsMatchedWithSizes_2 = () =>
+  birds.reduce((acc, bird, index) => {
     acc[bird] = sizes[index];
 
     return acc;
   }, {});
 
-  return object;
-};
+const objectWithBirdsAndSizes_2 = createObjectOfUniqueBirdsMatchedWithSizes_2();
 
-objectWithBirdsAndSizes = createObjectOfBirdsWithSizes_2();
+console.log(objectWithBirdsAndSizes_2);
 
-console.log(objectWithBirdsAndSizes);
-
-const createObjectOfBirdsWithSizes_3 = () => {
-  const object = arrayOfObjectsWithBirdsAndSizes.reduce(
+const createObjectOfUniqueBirdsMatchedWithSizes_3 = () =>
+  arrayOfObjectsWithBirdsAndSizes_1.reduce(
     (acc, { bird, size }) => ({
       ...acc,
       [bird]: size
@@ -407,49 +404,34 @@ const createObjectOfBirdsWithSizes_3 = () => {
     {}
   );
 
-  return object;
-};
+const objectWithBirdsAndSizes_3 = createObjectOfUniqueBirdsMatchedWithSizes_3();
 
-objectWithBirdsAndSizes = createObjectOfBirdsWithSizes_3();
+console.log(objectWithBirdsAndSizes_3);
 
-console.log(objectWithBirdsAndSizes);
+const createObjectOfUniqueBirdsMatchedWithSizes_4 = () =>
+  arrayOfObjectsWithBirdsAndSizes_2.reduce((acc, { bird, size }) => {
+    acc[bird] = size;
 
-const createObjectOfBirdsWithSizes_4 = () => {
-  const object = arrayOfObjectsWithBirdsAndSizes.reduce(
-    (acc, { bird, size }) => {
-      acc[bird] = size;
+    return acc;
+  }, {});
 
-      return acc;
-    },
-    {}
-  );
+const objectWithBirdsAndSizes_4 = createObjectOfUniqueBirdsMatchedWithSizes_4();
 
-  return object;
-};
+console.log(objectWithBirdsAndSizes_4);
 
-objectWithBirdsAndSizes = createObjectOfBirdsWithSizes_4();
-
-console.log(objectWithBirdsAndSizes);
-
-const arraysOfBirdsAndSizes = [...Object.entries(objectWithBirdsAndSizes)];
-
-console.log(arraysOfBirdsAndSizes);
-
-const createObjectsWithBirdsAndSizesWithMap = () => {
-  const arrayOfObjects = arraysOfBirdsAndSizes.map(([bird, size]) => ({
+const createObjectsWithUniqueBirdsAndSizes_1 = () =>
+  Object.entries(objectWithBirdsAndSizes_1).map(([bird, size]) => ({
     bird,
     size
   }));
 
-  return arrayOfObjects;
-};
+const arrayOfObjectsOfUniqueBirdsAndSizes_1 =
+  createObjectsWithUniqueBirdsAndSizes_1();
 
-let objectsOfBirdsAndSizes = createObjectsWithBirdsAndSizesWithMap();
+console.log(arrayOfObjectsOfUniqueBirdsAndSizes_1);
 
-console.log(objectsOfBirdsAndSizes);
-
-const createObjectsWithBirdsAndSizesWithReduce = () => {
-  const arrayOfObjects = arraysOfBirdsAndSizes.reduce(
+const createObjectsWithUniqueBirdsAndSizes_2 = () =>
+  Object.entries(objectWithBirdsAndSizes_1).reduce(
     (acc, [bird, size], index) => {
       acc[index] = { bird, size };
 
@@ -458,12 +440,10 @@ const createObjectsWithBirdsAndSizesWithReduce = () => {
     []
   );
 
-  return arrayOfObjects;
-};
+const arrayOfObjectsOfUniqueBirdsAndSizes_2 =
+  createObjectsWithUniqueBirdsAndSizes_2();
 
-objectsOfBirdsAndSizes = createObjectsWithBirdsAndSizesWithReduce();
-
-console.log(objectsOfBirdsAndSizes);
+console.log(arrayOfObjectsOfUniqueBirdsAndSizes_2);
 
 const createArrayOfObjectsOfUniqueBirds = () => {
   let key = 0;
@@ -481,11 +461,13 @@ const createArrayOfObjectsOfUniqueBirds = () => {
   return arrayOfObjectsOfUniqueBirdsAndSizes;
 };
 
-const arrayOfObjectsOfUniqueBirdsAndSizes = createArrayOfObjectsOfUniqueBirds();
-console.log(arrayOfObjectsOfUniqueBirdsAndSizes);
+const arrayOfObjectsOfUniqueBirdsAndSizes_3 =
+  createArrayOfObjectsOfUniqueBirds();
 
-const createDescriptiveBirdsObjects = () => {
-  const descriptiveBirdsObjects = arrayOfObjectsOfUniqueBirdsAndSizes.reduce(
+console.log(arrayOfObjectsOfUniqueBirdsAndSizes_3);
+
+const createArrayOfDescriptiveBirdsObjects = () =>
+  arrayOfObjectsOfUniqueBirdsAndSizes_3.reduce(
     (acc, { key, bird, size }, index) => {
       acc[index] = {
         [`Description_${key}`]: `${bird.charAt(0).toUpperCase()}${bird.slice(
@@ -498,48 +480,89 @@ const createDescriptiveBirdsObjects = () => {
     []
   );
 
-  return descriptiveBirdsObjects;
-};
-
-const arrayOfDescriptiveBirdsObjects = createDescriptiveBirdsObjects();
+const arrayOfDescriptiveBirdsObjects = createArrayOfDescriptiveBirdsObjects();
 
 console.log(arrayOfDescriptiveBirdsObjects);
 
-const financesData = [
+// Array of objects => array of objects unique by key
+const nameAndOccupationData = [
+  { id: 1, name: 'Mila', occupation: 'teacher' },
+  { id: 2, name: 'Bogdan', occupation: 'musician' },
+  { id: 3, name: 'Mila', occupation: 'interpreter' },
+  { id: 4, name: 'Bogdan', occupation: 'designer' },
+  { id: 5, name: 'Leo', occupation: 'hunter' },
+  { id: 6, name: 'Mila', occupation: 'web developer' }
+];
+
+// 1. using filter() and findIndex() => returns first elements of the initial array unique by key
+const getArrayOfObjectsUniqueByKey_1 = (array, key) =>
+  array.filter(
+    (item, index) =>
+      array.findIndex(element => element[key] === item[key]) === index
+  );
+
+const arrayOfNamesAndOccupationsUniqueByName_1 = getArrayOfObjectsUniqueByKey_1(
+  nameAndOccupationData,
+  'name'
+);
+
+console.log(arrayOfNamesAndOccupationsUniqueByName_1);
+
+// 2. using filter() and findLastIndex() => returns last elements of the initial array unique by key
+const getArrayOfObjectsUniqueByKey_2 = (array, key) =>
+  array.filter(
+    (item, index) =>
+      array.findLastIndex(element => element[key] === item[key]) === index
+  );
+
+const arrayOfNamesAndOccupationsUniqueByName_2 = getArrayOfObjectsUniqueByKey_2(
+  nameAndOccupationData,
+  'name'
+);
+
+console.log(arrayOfNamesAndOccupationsUniqueByName_2);
+
+// 3. using map() and new Map() => returns last elements of the initial array unique by key, maintaining order of appearance of elements by the given key
+const getArrayOfObjectsUniqueByKey_3 = (array, key) => [
+  ...new Map(array.map(item => [item[key], item])).values()
+];
+
+const arrayOfNamesAndOccupationsUniqueByName_3 = getArrayOfObjectsUniqueByKey_3(
+  nameAndOccupationData,
+  'name'
+);
+
+console.log(arrayOfNamesAndOccupationsUniqueByName_3);
+
+// Array of arrays => array of extended objects
+const transactionsData = [
   ['buy', 'usd', 50],
   ['sell', 'usd', 100],
   ['sell', 'eur', 200]
 ];
 
-const makeTableOfTransactionsWithMap = () => {
-  const transactions = financesData.map(([operation, currency, amount]) => ({
+// using map()
+const makeTableOfTransactions_1 = () =>
+  transactionsData.map(([operation, currency, amount]) => ({
     operation,
     currency,
     amount
   }));
 
-  return transactions;
-};
+console.table(makeTableOfTransactions_1());
 
-console.table(makeTableOfTransactionsWithMap());
+// using reduce()
+const makeTableOfTransactions_2 = () =>
+  transactionsData.reduce((acc, [operation, currency, amount], index) => {
+    acc[index] = { operation, currency, amount };
 
-const makeTableOfTransactionsWithReduce = () => {
-  const transactions = financesData.reduce(
-    (acc, [operation, currency, amount], index) => {
-      acc[index] = { operation, currency, amount };
+    return acc;
+  }, []);
 
-      return acc;
-    },
-    []
-  );
-
-  return transactions;
-};
-
-console.table(makeTableOfTransactionsWithReduce());
+console.table(makeTableOfTransactions_2());
 
 const calcBudget = () => {
-  const budget = financesData.reduce(
+  const budget = transactionsData.reduce(
     (total, [operation, currency, amount], index) => {
       currency === 'eur' && (amount *= 1.05);
 
@@ -577,22 +600,19 @@ const pancakesGroup = [
   { name: 'S L a V u N I A', technology: 'React' }
 ];
 
-const combineNameWithTech_1 = () => {
-  const object = pancakesGroup.reduce((acc, { name, technology }) => {
+const combineNameWithTech_1 = () =>
+  pancakesGroup.reduce((acc, { name, technology }) => {
     acc[name] = technology;
 
     return acc;
   }, {});
 
-  return object;
-};
+const pancakesGroupInfoObject_1 = combineNameWithTech_1();
 
-let pancakesGroupObject = combineNameWithTech_1();
+console.log(pancakesGroupInfoObject_1);
 
-console.log(pancakesGroupObject);
-
-const combineNameWithTech_2 = () => {
-  const object = pancakesGroup.reduce(
+const combineNameWithTech_2 = () =>
+  pancakesGroup.reduce(
     (acc, { name, technology }) => ({
       ...acc,
       [name]: technology
@@ -600,29 +620,20 @@ const combineNameWithTech_2 = () => {
     {}
   );
 
-  return object;
-};
+const pancakesGroupInfoObject_2 = combineNameWithTech_2();
 
-pancakesGroupObject = combineNameWithTech_2();
+console.log(pancakesGroupInfoObject_2);
 
-console.log(pancakesGroupObject);
+const groupStudentsBySpecialization = () =>
+  pancakesGroup.reduce((specialization, { technology, name }) => {
+    !specialization[technology] && (specialization[technology] = []);
 
-const groupMembersByTechnology = () => {
-  const technologies = pancakesGroup.reduce(
-    (specialization, { technology, name }) => {
-      !specialization[technology] && (specialization[technology] = []);
+    specialization[technology].push(name);
 
-      specialization[technology].push(name);
+    return specialization;
+  }, {});
 
-      return specialization;
-    },
-    {}
-  );
-
-  return technologies;
-};
-
-console.log(groupMembersByTechnology());
+console.table(groupStudentsBySpecialization());
 
 // Updating one object in an array in an immutable way
 const updatedPancakesGroup = pancakesGroup.map(pancake =>
