@@ -606,3 +606,22 @@ console.log(
     { d: 5 }
   )
 );
+
+// Sums of Parts
+
+const partsSums = ls => {
+  const sums = [];
+
+  const getFirstSum = arr => arr.reduce((acc, el) => acc + el, 0);
+
+  sums.push(getFirstSum(ls));
+
+  for (let i = 0; i < ls.length; i++) {
+    sums.push(sums[i] - ls[i]);
+  }
+
+  return sums;
+};
+
+console.log(partsSums([0, 1, 3, 6, 10]));
+console.log(partsSums([1, 2, 3, 4, 5, 6]));
