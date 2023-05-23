@@ -1,4 +1,4 @@
-import { RECENT_DATES } from './utils/recent-dates.js';
+import { RECENT_DATES } from './recent-dates.js';
 
 const calcDaysDiffBetweenDates = (prevDate, nextDate) => {
   const date1 = new Date(prevDate);
@@ -38,7 +38,7 @@ const calcNextDate = (lastDate, days) => {
 };
 
 console.log(
-  `My next cycle is expected on ${calcNextDate(
+  `The next cycle is expected on ${calcNextDate(
     RECENT_DATES.at(-1),
     calcAveragePeriod()
   )}.`
@@ -332,6 +332,40 @@ const buildASquare = num => ('+'.repeat(num) + '\n').repeat(num).trim();
 
 console.log(buildASquare(3));
 console.log(buildASquare(5));
+
+const trimLeadingAndTrailingWhiteSpaces_1 = str => {
+  const chars = str.split('');
+  const filteredChars = [];
+
+  for (let i = 1; i < chars.length; i++) {
+    if (
+      chars[i] !== ' ' ||
+      (chars[i] === ' ' && chars[i - 1] !== ' ' && chars[i + 1] !== ' ')
+    ) {
+      filteredChars.push(chars[i]);
+    }
+  }
+
+  return filteredChars.join('');
+};
+
+const trimLeadingAndTrailingWhiteSpaces_2 = str => {
+  const chars = [...str];
+
+  const firstStringIndex = chars.findIndex(char => char !== ' ');
+  const lastStringIndex = chars.findLastIndex(char => char !== ' ');
+
+  return chars.slice(firstStringIndex, lastStringIndex + 1).join('');
+};
+
+const trimLeadingAndTrailingWhiteSpaces_3 = str =>
+  str.replace(/^\s+|\s+$/g, '');
+
+const string = '     333 55 77  ';
+
+console.log(trimLeadingAndTrailingWhiteSpaces_1(string) === '333 55 77');
+console.log(trimLeadingAndTrailingWhiteSpaces_2(string) === '333 55 77');
+console.log(trimLeadingAndTrailingWhiteSpaces_3(string) === '333 55 77');
 
 // Deoxyribonucleic acid (DNA) is a chemical found in the nucleus of cells and carries the "instructions" for the development and functioning of living organisms. In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G".
 

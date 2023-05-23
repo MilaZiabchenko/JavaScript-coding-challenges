@@ -26,7 +26,7 @@ const arrayOfWords = [
   'lake',
   'squirrels',
   'sophisticated',
-  'resilience',
+  'resilience'
 ];
 
 const testLength = (minLength, maxLength) => word =>
@@ -38,7 +38,7 @@ const getArrayOfWordsOfLength = (array, minLength, maxLength) =>
 const getObjectOfArraysOfWordsOfEachLength = array => ({
   short_words: getArrayOfWordsOfLength(array, 0, 5),
   medium_words: getArrayOfWordsOfLength(array, 5, 9),
-  long_words: getArrayOfWordsOfLength(array, 9, Infinity),
+  long_words: getArrayOfWordsOfLength(array, 9, Infinity)
 });
 
 console.log(getObjectOfArraysOfWordsOfEachLength(arrayOfWords));
@@ -71,7 +71,7 @@ const findWordAnagrams = (word, allWords) => {
 };
 
 const displayAnagram = (word, allWords) => ({
-  [word + '_anagrams']: findWordAnagrams(word, allWords),
+  [word + '_anagrams']: findWordAnagrams(word, allWords)
 });
 
 const displayAnagrams = (words, allWords) =>
@@ -100,14 +100,14 @@ const inputCriteria = inputValues => ({
   firstName: validateFirstName(inputValues.firstName),
   lastName: validateLastName(inputValues.lastName),
   zipCode: validateZipCode(inputValues.zipCode),
-  city: validateCity(inputValues.city),
+  city: validateCity(inputValues.city)
 });
 
 const currentInputValues = {
   firstName: 'Leo',
   lastName: 'Z',
   zipCode: '2103',
-  city: 'Vinnytsia',
+  city: 'Vinnytsia'
 };
 
 const getErrorMessages = (inputs, criteria) =>
@@ -120,7 +120,7 @@ console.log(getErrorMessages(currentInputValues, inputCriteria));
 // Get classroom attendance roles object
 const classroom = {
   hasTeachingAssistant: true,
-  classlist: ['Rashida', 'John', 'Roman', 'Lisa', 'Omar', 'Lucas'],
+  classlist: ['Rashida', 'John', 'Roman', 'Lisa', 'Omar', 'Lucas']
 };
 
 const getClassroomRoles = ({ hasTeachingAssistant, classlist }) => {
@@ -158,7 +158,7 @@ const getCombinedMenu = menus => [...new Set(menus.flat())];
 const combinedMenu = getCombinedMenu([
   ['pizza', 'cheese', 'pineapple', 'maize'],
   ['pizza', 'chicken', 'tomatoes', 'onions'],
-  ['pizza', 'tomatoes', 'mushrooms', 'onions', 'pepper'],
+  ['pizza', 'tomatoes', 'mushrooms', 'onions', 'pepper']
 ]);
 
 console.log(combinedMenu);
@@ -166,26 +166,26 @@ console.log(combinedMenu);
 // Challenge 8
 
 // Create train stations generator
-const station = document.querySelector('span');
+const station = document.getElementById('station');
 const dynamicText = document.getElementById('dynamic-text');
-const btn = document.getElementById('btn-next-stop');
+const nextStationButton = document.getElementById('btn-next-station');
 
-const stops = ['Newburgh', 'Peekskill', 'Yonkers', 'Bronx', 'Grand Central'];
+const stations = ['Newburgh', 'Peekskill', 'Yonkers', 'Bronx', 'Grand Central'];
 
-function* generateStops(...stops) {
-  for (let stop of stops) {
-    yield stop;
+function* generateStations(...stations) {
+  for (let station of stations) {
+    yield station;
   }
 
-  return `We made it to ${stops.at(-1)}!`;
+  return `Hooray, we made it to ${stations.at(-1)}!`;
 }
 
-const nycHudsonLine = generateStops(...stops);
+const nycHudsonLine = generateStations(...stations);
 
 const animateButton = () => {
-  btn.style.outlineOffset = '9px';
+  nextStationButton.style.outlineOffset = '9px';
 
-  setTimeout(() => (btn.style.outlineOffset = '6px'), 125);
+  setTimeout(() => (nextStationButton.style.outlineOffset = '6px'), 125);
 };
 
 const getToTheNextStation = () => {
@@ -199,11 +199,11 @@ const getToTheNextStation = () => {
     station.parentNode.remove();
     dynamicText.textContent = currentStation.value;
     dynamicText.style.fontSize = '2.25rem';
-    btn.setAttribute('disabled', true);
+    nextStationButton.setAttribute('disabled', true);
   }
 };
 
-btn.addEventListener('click', getToTheNextStation);
+nextStationButton.addEventListener('click', getToTheNextStation);
 
 // Challenge 9
 
