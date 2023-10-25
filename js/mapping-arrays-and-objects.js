@@ -204,7 +204,7 @@ console.log(objectOfVehiclesSortedByKeysAlphabetically);
 
 // Sorting object by values
 
-// 1. using Object.keys(), sort(), and reduce()
+// 1. using Object.keys(), sort() and reduce()
 const sortObjectByValues_1 = object =>
   Object.keys(object)
     .sort((prev_key, next_key) => object[next_key] - object[prev_key])
@@ -216,7 +216,7 @@ const objectOfSortedVehicleInstances_1 = sortObjectByValues_1(
 
 console.log(objectOfSortedVehicleInstances_1);
 
-// 2. using Object.entries(), sort(), and reduce()
+// 2. using Object.entries(), sort() and reduce()
 const sortObjectByValues_2 = object =>
   Object.entries(object)
     .sort(([, prev_value], [, next_value]) => next_value - prev_value)
@@ -228,7 +228,7 @@ const objectOfSortedVehicleInstances_2 = sortObjectByValues_2(
 
 console.log(objectOfSortedVehicleInstances_2);
 
-// 3. using Object.fromEntries(), Object.entries(), and sort()
+// 3. using Object.fromEntries(), Object.entries() and sort()
 const sortObjectByValues_3 = object =>
   Object.fromEntries(
     Object.entries(object).sort(
@@ -313,7 +313,7 @@ console.log(birdsListObject_2);
 
 // 1. Specific function implementation:
 
-// using map()
+// 1.1 using map()
 const combineBirdsAndSizes_1 = () =>
   birds.map((bird, index) => ({
     bird,
@@ -324,7 +324,7 @@ const arrayOfObjectsWithBirdsAndSizes_1 = combineBirdsAndSizes_1();
 
 console.log(arrayOfObjectsWithBirdsAndSizes_1);
 
-// using reduce()
+// 1.2 using reduce()
 const combineBirdsAndSizes_2 = () =>
   birds.reduce(
     (acc, bird, index) => [...acc, { bird, size: sizes[index] }],
@@ -337,7 +337,7 @@ console.log(arrayOfObjectsWithBirdsAndSizes_2);
 
 // 2. General function implementation:
 
-// using map()
+// 2.1 using map()
 const combineElementsOfTwoArrays_1 = (array_1, array_2, key_1, key_2) =>
   array_1.map((item, index) => ({
     [key_1]: item,
@@ -353,7 +353,7 @@ const arrayOfObjectsWithBirdsAndSizes_3 = combineElementsOfTwoArrays_1(
 
 console.log(arrayOfObjectsWithBirdsAndSizes_3);
 
-// using reduce()
+// 2.2 using reduce()
 const combineElementsOfTwoArrays_2 = (array_1, array_2, key_1, key_2) =>
   array_1.reduce((acc, item, index) => {
     acc[index] = { [key_1]: item, [key_2]: array_2[index] };
@@ -489,7 +489,7 @@ const nameAndOccupationData = [
   { id: 1, name: 'Mila', occupation: 'teacher' },
   { id: 2, name: 'Bogdan', occupation: 'musician' },
   { id: 3, name: 'Mila', occupation: 'interpreter' },
-  { id: 4, name: 'Bogdan', occupation: 'designer' },
+  { id: 4, name: 'Bogdan', occupation: '3d artist' },
   { id: 5, name: 'Leo', occupation: 'hunter' },
   { id: 6, name: 'Mila', occupation: 'web developer' }
 ];
@@ -506,7 +506,7 @@ const arrayOfNamesAndOccupationsUniqueByName_1 = getArrayOfObjectsUniqueByKey_1(
   'name'
 );
 
-console.log(arrayOfNamesAndOccupationsUniqueByName_1);
+console.table(arrayOfNamesAndOccupationsUniqueByName_1);
 
 // 2. using filter() and findLastIndex() => returns last elements of the initial array unique by key
 const getArrayOfObjectsUniqueByKey_2 = (array, key) =>
@@ -520,7 +520,7 @@ const arrayOfNamesAndOccupationsUniqueByName_2 = getArrayOfObjectsUniqueByKey_2(
   'name'
 );
 
-console.log(arrayOfNamesAndOccupationsUniqueByName_2);
+console.table(arrayOfNamesAndOccupationsUniqueByName_2);
 
 // 3. using map() and new Map() => returns last elements of the initial array unique by key, maintaining order of appearance of elements by the given key
 const getArrayOfObjectsUniqueByKey_3 = (array, key) => [
@@ -532,7 +532,7 @@ const arrayOfNamesAndOccupationsUniqueByName_3 = getArrayOfObjectsUniqueByKey_3(
   'name'
 );
 
-console.log(arrayOfNamesAndOccupationsUniqueByName_3);
+console.table(arrayOfNamesAndOccupationsUniqueByName_3);
 
 // Array of arrays => array of extended objects
 const transactionsData = [
@@ -541,7 +541,7 @@ const transactionsData = [
   ['sell', 'eur', 200]
 ];
 
-// using map()
+// 1. using map()
 const makeTableOfTransactions_1 = () =>
   transactionsData.map(([operation, currency, amount]) => ({
     operation,
@@ -551,7 +551,7 @@ const makeTableOfTransactions_1 = () =>
 
 console.table(makeTableOfTransactions_1());
 
-// using reduce()
+// 2. using reduce()
 const makeTableOfTransactions_2 = () =>
   transactionsData.reduce((acc, [operation, currency, amount], index) => {
     acc[index] = { operation, currency, amount };
@@ -587,7 +587,7 @@ const calcBudget = () => {
 
 calcBudget();
 
-const pancakesGroup = [
+const initialStudents = [
   { name: 'Vika', technology: 'Angular' },
   { name: 'Valery', technology: 'React' },
   { name: 'Roma', technology: 'React' },
@@ -600,19 +600,37 @@ const pancakesGroup = [
   { name: 'S L a V u N I A', technology: 'React' }
 ];
 
-const combineNameWithTech_1 = () =>
-  pancakesGroup.reduce((acc, { name, technology }) => {
+// Adding new items to the end of the array of objects in an immutable way
+const addedStudents = [
+  ...initialStudents,
+  { name: 'Bodia', technology: 'Angular' },
+  { name: 'Maria', technology: 'React' }
+];
+
+// Updating one object in an array in an immutable way
+const updatedStudents = addedStudents.map(student =>
+  student.name === 'Roma'
+    ? Object.assign({}, student, { technology: 'React Native' })
+    : student
+);
+
+console.log({ initialStudents });
+console.log({ addedStudents });
+console.log({ updatedStudents });
+
+const combineNameWithTech_1 = students =>
+  students.reduce((acc, { name, technology }) => {
     acc[name] = technology;
 
     return acc;
   }, {});
 
-const pancakesGroupInfoObject_1 = combineNameWithTech_1();
+const studentsInfoObject_1 = combineNameWithTech_1(updatedStudents);
 
-console.log(pancakesGroupInfoObject_1);
+console.log(studentsInfoObject_1);
 
-const combineNameWithTech_2 = () =>
-  pancakesGroup.reduce(
+const combineNameWithTech_2 = students =>
+  students.reduce(
     (acc, { name, technology }) => ({
       ...acc,
       [name]: technology
@@ -620,35 +638,47 @@ const combineNameWithTech_2 = () =>
     {}
   );
 
-const pancakesGroupInfoObject_2 = combineNameWithTech_2();
+const studentsInfoObject_2 = combineNameWithTech_2(updatedStudents);
 
-console.log(pancakesGroupInfoObject_2);
+console.log(studentsInfoObject_2);
 
-const groupStudentsBySpecialization = () =>
-  pancakesGroup.reduce((specialization, { technology, name }) => {
-    !specialization[technology] && (specialization[technology] = []);
+// Grouping array of objects by common key => object
 
-    specialization[technology].push(name);
+// 1. using reduce()
+const studentsGroupedBySpecialization_1 = updatedStudents.reduce(
+  (acc, { technology, name }) => {
+    acc[technology] = acc[technology] ?? [];
 
-    return specialization;
-  }, {});
+    acc[technology].push(name);
 
-console.table(groupStudentsBySpecialization());
-
-// Updating one object in an array in an immutable way
-const updatedPancakesGroup = pancakesGroup.map(pancake =>
-  pancake.name === 'Roma'
-    ? Object.assign({}, pancake, { technology: 'React Native' })
-    : pancake
+    return acc;
+  },
+  {}
 );
 
-// Adding new items to the end of the array of objects in an immutable way
-const expandedPancakesGroup = [
-  ...updatedPancakesGroup,
-  { name: 'Bodia', technology: 'Angular' },
-  { name: 'Maria', technology: 'React' }
-];
+console.table(studentsGroupedBySpecialization_1);
 
-console.log(pancakesGroup);
-console.log(updatedPancakesGroup);
-console.log(expandedPancakesGroup);
+// 2. using Object.entries(), Object.groupBy(), reduce() and map()
+const studentsGroupedBySpecialization_2 = Object.entries(
+  Object.groupBy(updatedStudents, ({ technology }) => technology)
+).reduce(
+  (acc, [technology, students]) => ({
+    ...acc,
+    [technology]: students.map(student => student.name)
+  }),
+  {}
+);
+
+console.table(studentsGroupedBySpecialization_2);
+
+// 3. using Object.fromEntries(), Object.entries(), Object.groupBy() and map()
+const studentsGroupedBySpecialization_3 = Object.fromEntries(
+  Object.entries(
+    Object.groupBy(updatedStudents, ({ technology }) => technology)
+  ).map(([technology, students]) => [
+    technology,
+    students.map(student => student.name)
+  ])
+);
+
+console.table(studentsGroupedBySpecialization_3);
