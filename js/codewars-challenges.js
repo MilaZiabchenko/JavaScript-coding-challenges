@@ -32,6 +32,7 @@ const adjacentElementsMaxProduct = array => {
 
   return Math.max(...productsArr);
 };
+
 console.log(
   adjacentElementsMaxProduct([1, 55, 17, 77, 709, 95, -10, 100, 205])
 );
@@ -625,3 +626,35 @@ const partsSums = ls => {
 
 console.log(partsSums([0, 1, 3, 6, 10]));
 console.log(partsSums([1, 2, 3, 4, 5, 6]));
+
+// Meeting
+
+const string =
+  'Fred:Corwill;Wilfred:Corwill;Barney:Tornbull;Betty:Tornbull;Bjon:Tornbull;Raphael:Corwill;Alfred:Corwill';
+
+const result =
+  '(CORWILL, ALFRED)(CORWILL, FRED)(CORWILL, RAPHAEL)(CORWILL, WILFRED)(TORNBULL, BARNEY)(TORNBULL, BETTY)(TORNBULL, BJON)';
+
+const meeting = guests => {
+  const sortedGuests = guests
+    .toUpperCase()
+    .split(';')
+    .map(fullName => fullName.split(':'))
+    .sort((prev, next) =>
+      prev[1] > next[1]
+        ? 1
+        : prev[1] < next[1]
+        ? -1
+        : prev[0] > next[0]
+        ? 1
+        : prev[0] < next[0]
+        ? -1
+        : 0
+    )
+    .map(([firstName, secondName]) => `(${secondName}, ${firstName})`)
+    .join('');
+
+  return sortedGuests;
+};
+
+console.log(meeting(string) === result);
