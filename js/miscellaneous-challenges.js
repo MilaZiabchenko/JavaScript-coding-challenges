@@ -138,7 +138,7 @@ const makeArrayOfDifferences = (array1, array2) => {
 console.log(makeArrayOfMatches(sortedArray, unsortedArray));
 console.log(makeArrayOfDifferences(sortedArray, unsortedArray));
 
-const makeArrayOfUniqueValues = array => {
+const makeArrayOfUniqueValues_1 = array => {
   const arrOfUniqueValues = [];
 
   array.filter(
@@ -149,10 +149,23 @@ const makeArrayOfUniqueValues = array => {
   return arrOfUniqueValues;
 };
 
+const makeArrayOfUniqueValues_2 = array => {
+  const arrOfUniqueValues = array.reduce(
+    (acc, el) => {
+      !acc.includes(el) && acc.push(el);
+
+      return acc;
+    }, []
+  );
+
+  return arrOfUniqueValues;
+};
+
 const array = [37, 5, 7, 9, '9', 5, 7, 37, 3];
 
-const arrOfUniqueValuesOldWay = makeArrayOfUniqueValues(array);
-const arrOfUniqueValuesNewWay = [...new Set(array)];
+const arrOfUniqueValues_1 = makeArrayOfUniqueValues_1(array);
+const arrOfUniqueValues_2 = makeArrayOfUniqueValues_2(array);
+const arrOfUniqueValues_3 = [...new Set(array)];
 
 const findDuplicates = array => {
   const arrOfDuplicates = [];
@@ -168,8 +181,9 @@ const findDuplicates = array => {
 
 const arrOfDuplicates = findDuplicates(array);
 
-console.log(arrOfUniqueValuesOldWay);
-console.log(arrOfUniqueValuesNewWay);
+console.log(arrOfUniqueValues_1);
+console.log(arrOfUniqueValues_2);
+console.log(arrOfUniqueValues_3);
 console.log(arrOfDuplicates);
 
 const countOccurrences = (array, targetValue) =>
