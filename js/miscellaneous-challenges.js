@@ -139,14 +139,14 @@ console.log(makeArrayOfMatches(sortedArray, unsortedArray));
 console.log(makeArrayOfDifferences(sortedArray, unsortedArray));
 
 const makeArrayOfUniqueValues = array => {
-  const arrOfUniqueValuesNewWay = [];
+  const arrOfUniqueValues = [];
 
   array.filter(
     (el, index) =>
-      array.indexOf(el) === index && arrOfUniqueValuesNewWay.push(el)
+      array.indexOf(el) === index && arrOfUniqueValues.push(el)
   );
 
-  return arrOfUniqueValuesNewWay;
+  return arrOfUniqueValues;
 };
 
 const array = [37, 5, 7, 9, '9', 5, 7, 37, 3];
